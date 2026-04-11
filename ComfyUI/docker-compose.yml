@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  comfyui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: comfyui
+    ports:
+      - "8188:8188"
+    volumes:
+      # ============================================
+      # 기존 SD WebUI 모델 폴더 공유 (/app/models/)
+      # ============================================
+      
+      # 체크포인트 (SD 1.5, SDXL 등)
+      - /app/models/Stable-diffusion:/app/ComfyUI/models/checkpoints
+      
+      # LoRA
+      - /app/models/Lora:/app/ComfyUI/models/loras
+      
+      # Embeddings (Textual Inversion)
+      - /app/embeddings:/app/ComfyUI/models/embeddings
+      
+      # ============================================
+      # 추가 모델 폴더 (필요시 호스트에 생성)
+      # sudo mkdir -p /app/models/{VAE,ControlNet,ESRGAN,clip,clip_vision,unet}
+      # sudo chmod -R 777 /app/models
+      # ============================================
+      
+      # VAE
+      - /app/models/VAE:/app/ComfyUI/models/vae
+      
+      # ControlNet
+      - /app/models/ControlNet:/app/ComfyUI/models/controlnet
+      
+      # Upscale 모델 (ESRGAN 등)
+      - /app/models/ESRGAN:/app/ComfyUI/models/upscale_models
+      
+      # CLIP (Flux 등 최신 모델용)
+      - /app/models/clip:/app/ComfyUI/models/clip
+      
+      # CLIP Vision
+      - /app/models/clip_vision:/app/ComfyUI/models/clip_vision
+      
+      # UNET (Flux, SD3 등 분리된 UNET)
+      - /app/models/unet:/app/ComfyUI/models/unet
+      
+      # ============================================
+      # 출력 및 입력
+      # ============================================
+      - /app/outputs:/app/ComfyUI/output
+      - /app/inputs:/app/ComfyUI/input
+      
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
