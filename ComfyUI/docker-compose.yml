@@ -47,6 +47,12 @@ services:
       - /app/models/unet:/app/ComfyUI/models/unet
       
       # ============================================
+      # 커스텀 노드 및 워크플로 (컨테이너 재생성 시 유지)
+      # ============================================
+      - /app/comfyui/custom_nodes:/app/ComfyUI/custom_nodes
+      - /app/comfyui/user:/app/ComfyUI/user
+
+      # ============================================
       # 출력 및 입력
       # ============================================
       - /app/outputs:/app/ComfyUI/output

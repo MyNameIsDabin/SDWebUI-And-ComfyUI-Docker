@@ -15,6 +15,8 @@ DIRS=(
     /app/models/clip_vision
     /app/models/unet
     /app/embeddings
+    /app/comfyui/custom_nodes
+    /app/comfyui/user
     /app/outputs
     /app/inputs
 )
@@ -33,6 +35,7 @@ echo ""
 echo "권한 설정 (chmod 777)..."
 sudo chmod -R 777 /app/models
 sudo chmod -R 777 /app/embeddings
+sudo chmod -R 777 /app/comfyui
 sudo chmod -R 777 /app/outputs
 sudo chmod -R 777 /app/inputs
 
