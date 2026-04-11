@@ -31,8 +31,8 @@ services:
       # VAE
       - /app/models/VAE:/app/ComfyUI/models/vae
       
-      # ControlNet
-      - /app/models/ControlNet:/app/ComfyUI/models/controlnet
+      # ControlNet (SD WebUI 확장에서 공유)
+      - /app/extensions/sd-webui-controlnet/models:/app/ComfyUI/models/controlnet
       
       # Upscale 모델 (ESRGAN 등)
       - /app/models/ESRGAN:/app/ComfyUI/models/upscale_models
