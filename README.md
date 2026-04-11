@@ -59,3 +59,25 @@ docker system df
 # 도커 캐시 정리
 docker system prune -a -f
 ```
+
+## 제거 가이드
+
+### SDWebUI 제거
+
+```bash
+docker stop sd-webui && docker rm sd-webui   # 컨테이너 제거
+docker rmi stable-diffusion-webui            # 이미지 제거
+docker system prune -f                       # 캐시 정리
+```
+
+### ComfyUI 제거
+
+```bash
+cd ComfyUI
+docker compose down                          # 컨테이너 제거
+docker rmi comfyui-comfyui                   # 이미지 제거
+docker system prune -f                       # 캐시 정리
+```
+
+> 모델 파일(`/app/models/`)은 호스트에 있으므로 컨테이너를 제거해도 유지됩니다.
+> 모델까지 삭제하려면: `sudo rm -rf /app/models /app/embeddings /app/outputs /app/inputs`

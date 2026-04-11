@@ -1,4 +1,4 @@
-FROM nvidia/cuda:13.0.0-cudnn-runtime-ubuntu22.04
+FROM nvidia/cuda:12.8.0-cudnn-runtime-ubuntu22.04
 
 # 1. 시스템 패키지 + Python 3.13 설치
 ENV DEBIAN_FRONTEND=noninteractive
@@ -42,14 +42,14 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git
 WORKDIR /app/ComfyUI
 
 # 6. 가상환경 및 라이브러리 설치
-# 2026년 권장: PyTorch 2.9.1 + CUDA 13.0 (cu130)
+# PyTorch + CUDA 12.8 (cu128) — 호스트 드라이버 CUDA ≥ 12.8 필요
 RUN python3.13 -m venv venv && \
     ./venv/bin/pip install --no-cache-dir --upgrade pip && \
     ./venv/bin/pip install --no-cache-dir \
-        torch==2.9.1 \
+        torch \
         torchvision \
         torchaudio \
-        --index-url https://download.pytorch.org/whl/cu130 && \
+        --index-url https://download.pytorch.org/whl/cu128 && \
     ./venv/bin/pip install --no-cache-dir -r requirements.txt
 
 # 7. ComfyUI-Manager 설치 (선택사항이지만 권장)
