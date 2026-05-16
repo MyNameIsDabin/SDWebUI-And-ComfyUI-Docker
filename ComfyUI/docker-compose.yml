@@ -24,7 +24,7 @@ services:
       
       # ============================================
       # 추가 모델 폴더 (필요시 호스트에 생성)
-      # sudo mkdir -p /app/models/{VAE,ControlNet,ESRGAN,clip,clip_vision,unet}
+      # sudo mkdir -p /app/models/{VAE,ControlNet,ESRGAN,clip,clip_vision,unet,diffusion_models}
       # sudo chmod -R 777 /app/models
       # ============================================
       
@@ -43,9 +43,12 @@ services:
       # CLIP Vision
       - /app/models/clip_vision:/app/ComfyUI/models/clip_vision
       
-      # UNET (Flux, SD3 등 분리된 UNET)
+      # UNET (레거시 경로, 하위 호환성 유지)
       - /app/models/unet:/app/ComfyUI/models/unet
-      
+
+      # Diffusion Models (Flux, SD3 등 최신 모델 — ComfyUI 신규 표준 경로)
+      - /app/models/diffusion_models:/app/ComfyUI/models/diffusion_models
+
       # ============================================
       # 커스텀 노드 및 워크플로 (컨테이너 재생성 시 유지)
       # ============================================
